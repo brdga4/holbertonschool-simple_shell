@@ -14,5 +14,7 @@ extern char **environ;
 char *find_path(char *cmd);
 char **tokenize(char *line);
 int execute(char **args, char *prog_name);
+int handle_builtin(char **args, char *prog_name, char *line, int status);
+int run_shell(char *argv[]);
 
 #endif
