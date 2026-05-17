@@ -1,0 +1,52 @@
+.TH simple_shell 1 "May 2026" "simple_shell man-page"
+.SH NAME
+simple_shell - a simple UNIX command line interpreter
+.SH SYNOPSIS
+.B ./hsh
+.SH DESCRIPTION
+The \fBsimple_shell\fP is a simple UNIX command line interpreter written in C
+for Holberton School. It reads commands from the user and executes them.
+It works in both interactive and non-interactive mode.
+.SH USAGE
+.SS Interactive mode
+The shell displays a prompt and waits for the user to type a command.
+.PP
+$ ./hsh
+.PP
+($) /bin/ls
+.PP
+hsh main.c shell.c shell.h
+.PP
+($)
+.SS Non-interactive mode
+The shell can also receive commands from a pipe or a file.
+.PP
+$ echo "/bin/ls" | ./hsh
+.PP
+hsh main.c shell.c shell.h
+.SH RETURN VALUE
+Upon success, the command returns 0.
+If an error occurs or the command is not found, 1 is returned.
+.SH EXAMPLES
+.PP
+($) /bin/ls
+.PP
+Output: lists files in current directory
+.PP
+($) /bin/pwd
+.PP
+Output: prints current working directory
+.PP
+($) /bin/echo Hello
+.PP
+Output: Hello
+.SH AUTHORS
+Written by Noura Alotibi and Mohammed Mustafa as part of the Holberton School simple shell project.
+.SH SEE ALSO
+.BR sh (1),
+.BR execve (2),
+.BR fork (2),
+.BR waitpid (2),
+.BR getline (3)
+.SH NOTES
+This implementation is a simplified version of the standard shell.
