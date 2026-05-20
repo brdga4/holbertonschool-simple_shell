@@ -41,7 +41,7 @@ Output: prints current working directory
 .PP
 Output: Hello
 .SH AUTHORS
-Written by Noura Alotibi and Mohammed Mustafa as part of the Holberton School simple shell project.
+Written by SHAHAD ALHARBI and Basem  as part of the Holberton School simple shell project.
 .SH SEE ALSO
 .BR sh (1),
 .BR execve (2),
