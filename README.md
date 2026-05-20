@@ -1,4 +1,4 @@
- Simple Shell
+# Simple Shell
 
 A simple UNIX command line interpreter written in C.
 
@@ -28,6 +28,6 @@ echo "/bin/ls" | ./hsh
 
 ## Authors
 
-Shahad Alharbi shahadeissa111@gmail.com
-Basem
+Shahad Alharbi
+Basem 
 
