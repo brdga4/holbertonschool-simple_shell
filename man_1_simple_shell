@@ -1,60 +1,61 @@
-.TH simple_shell 1 "May 2026" "simple_shell man-page"
+.TH SIMPLE_SHELL 1 "May 2026" "Version 1.0" "User Commands"
+
 .SH NAME
-simple_shell \- a simple UNIX command line interpreter
+simple_shell \- simple UNIX command interpreter
+
 .SH SYNOPSIS
-.B ./hsh
+.B simple_shell
+
 .SH DESCRIPTION
-The \fBsimple_shell\fP is a simple UNIX command line interpreter written in C
-for Holberton School. It reads commands from the user and executes them.
-It works in both interactive and non-interactive mode. It also handles the \fBPATH\fP environment variable to resolve commands.
-.SH USAGE
-.SS Interactive mode
-The shell displays a prompt and waits for the user to type a command.
-.PP
-$ ./hsh
-.PP
-($) ls
-.PP
-hsh main.c shell.c shell.h
-.PP
-($)
-.SS Non-interactive mode
-The shell can also receive commands from a pipe or a file.
-.PP
-$ echo "ls" | ./hsh
-.PP
-hsh main.c shell.c shell.h
+.B simple_shell
+is a basic UNIX command interpreter that reads commands from standard input,
+parses them, and executes programs by resolving their paths using the
+.B PATH
+environment variable. It supports both interactive (terminal) and
+non-interactive (piped or script) modes.
+
 .SH BUILT-IN COMMANDS
-The following built-in commands are supported:
+
 .TP
-\fBenv\fP
-Prints the current environment variables.
+.B exit
+Exits the shell. If no argument is provided, it exits with the status of the
+last executed command.
+
 .TP
-\fBexit\fP
-Exits the shell with the status of the last executed command.
-.SH RETURN VALUE
-Upon success, the command returns 0.
-If a command is not found, \fB127\fP is returned.
+.B env
+Prints the current environment variables to standard output.
+
 .SH EXAMPLES
-.PP
-($) ls
-.PP
-Output: lists files in current directory
-.PP
-($) pwd
-.PP
-Output: prints current working directory
-.PP
-($) echo Hello
-.PP
-Output: Hello
+
+.TP
+.B pwd
+Prints the absolute path of the current working directory.
+
+.TP
+.B echo Hello
+Prints:
+Hello
+
+.SH EXIT STATUS
+Returns the exit status of the last executed command.
+.br
+Returns \fB127\fR if a command is not found.
+.br
+Returns \fB0\fR on success.
+
+.SH NOTES
+This shell is a simplified educational implementation of a UNIX command
+interpreter. It does not aim to fully comply with POSIX shell standards.
+
 .SH AUTHORS
-Written by Shahad alharbi and Basem Tashkandi as part of the Holberton School simple shell project.
+Written by Shahad Alharbi and Basem Tashkandi as part of the Holberton School
+simple shell project.
+
 .SH SEE ALSO
 .BR sh (1),
+.BR bash (1),
 .BR execve (2),
 .BR fork (2),
 .BR waitpid (2),
-.BR getline (3)
-.SH NOTES
-This implementation is a simplified version of the standard shell.
+.BR getline (3),
+.BR strtok (3)
