@@ -28,6 +28,6 @@ echo "/bin/ls" | ./hsh
 
 ## Authors
 
-Shahad Alharbi
-Basem 
+Shahad Alharbi <shahadeissa111@gmail.com>
+Basem <basem.tashkandi@gmail.com>
 
