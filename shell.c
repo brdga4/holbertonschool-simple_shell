@@ -37,6 +37,8 @@ int execute(char **args, char *progname)
 	int status;
 	char *fullpath;
 
+	if (strcmp(args[0], "exit") == 0)
+		exit(EXIT_SUCCESS);
 	fullpath = find_path(args[0]);
 	if (fullpath == NULL)
 	{
