@@ -3,15 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <sys/wait.h>
+#include <unistd.h>
+#include <sys/types.h>
 #include <sys/stat.h>
-
-extern char **environ;
+#include <sys/wait.h>
 
 char **split_line(char *line);
-int execute(char **args, char *progname);
-char *find_path(char *cmd);
+int execute(char **args);
+char *get_path(char **env);
+char *get_location(char *command, char **env);
 
 #endif

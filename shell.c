@@ -4,7 +4,7 @@
  * split_line - splits a line into tokens
  * @line: the input line
  *
- * Return: array of strings, or NULL on failure
+ * Return: array of strings
  */
 char **split_line(char *line)
 {
@@ -25,38 +25,120 @@ char **split_line(char *line)
 }
 
 /**
- * execute - finds and executes a command
+ * execute - forks and executes a command
  * @args: array of arguments
- * @progname: name of the shell program (argv[0])
  *
- * Return: 1 on success, 0 if command not found
+ * Return: 1
  */
-int execute(char **args, char *progname)
+int execute(char **args)
 {
 	pid_t pid;
 	int status;
-	char *fullpath;
 
-	if (strcmp(args[0], "exit") == 0)
-		exit(EXIT_SUCCESS);
-	fullpath = find_path(args[0]);
-	if (fullpath == NULL)
-	{
-		fprintf(stderr, "%s: 1: %s: not found\n", progname, args[0]);
-		return (0);
-	}
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(fullpath, args, environ) == -1)
-			perror(progname);
-		if (fullpath != args[0])
-			free(fullpath);
-		exit(EXIT_FAILURE);
+		if (execve(args[0], args, NULL) == -1)
+		{
+			perror("hsh");
+			exit(2);
+		}
+	}
+	else if (pid < 0)
+	{
+		perror("hsh");
 	}
 	else
-		waitpid(pid, &status, 0);
-	if (fullpath != args[0])
-		free(fullpath);
-	return (1);
+	{
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			return (WEXITSTATUS(status));
+		}
+	}
+	return (0);
+}
+
+/**
+ * get_path - Finds the PATH variable in the environment array
+ * @env: The environment variables array
+ *
+ * Return: Pointer to the path value, or NULL if not found
+ */
+char *get_path(char **env)
+{
+	int i;
+
+	for (i = 0; env[i] != NULL; i++)
+	{
+		if (env[i][0] == 'P' && env[i][1] == 'A' &&
+		    env[i][2] == 'T' && env[i][3] == 'H' && env[i][4] == '=')
+		{
+			return (&env[i][5]);
+		}
+	}
+	return (NULL);
+}
+
+/**
+ * get_location - Looks for a command in the directories listed in PATH
+ * @command: The command to look for
+ *
+ * Return: Full path of the command if found, or NULL if not found
+ */
+char *get_location(char *command, char **env)
+{
+	char *path, *path_copy, *path_token, *file_path;
+	int command_length, directory_length;
+	struct stat buffer;
+
+	if (strchr(command, '/') != NULL)
+	{
+		if (stat(command, &buffer) == 0)
+		{
+			path_copy = malloc(strlen(command) + 1);
+			if (!path_copy)
+				return (NULL);
+			strcpy(path_copy, command);
+			return (path_copy);
+		}
+		return (NULL);
+	}
+
+	path = get_path(env);
+	if (!path || strlen(path) == 0)
+		return (NULL);
+
+	path_copy = malloc(strlen(path) + 1);
+	if (!path_copy)
+		return (NULL);
+	strcpy(path_copy, path);
+
+	command_length = strlen(command);
+	path_token = strtok(path_copy, ":");
+
+	while (path_token != NULL)
+	{
+		directory_length = strlen(path_token);
+		file_path = malloc(command_length + directory_length + 2);
+		if (!file_path)
+		{
+			free(path_copy);
+			return (NULL);
+		}
+
+		strcpy(file_path, path_token);
+		strcat(file_path, "/");
+		strcat(file_path, command);
+
+		if (stat(file_path, &buffer) == 0)
+		{
+			free(path_copy);
+			return (file_path);
+		}
+		free(file_path);
+		path_token = strtok(NULL, ":");
+	}
+	free(path_copy);
+	return (NULL);
 }
