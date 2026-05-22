@@ -29,5 +29,5 @@ echo "/bin/ls" | ./hsh
 ## Authors
 
 Shahad Alharbi <shahadeissa111@gmail.com>
-Basem <basem.tashkandi@gmail.com>
+Basem Tashkandi <basem.tashkandi@gmail.com>
 
